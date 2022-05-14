@@ -11,8 +11,8 @@ func main() {
 
 	v1 := router.Group("/api/v1")
 
-	resourceStock := game.NewResourcesStock()
-	controller := controllers.NewGameController(resourceStock)
+	game := game.NewGame()
+	controller := controllers.NewGameController(game)
 
 	controller.RegisterRouter(v1)
 

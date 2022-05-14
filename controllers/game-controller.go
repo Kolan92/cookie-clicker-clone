@@ -10,14 +10,14 @@ import (
 )
 
 type GameController struct {
-	resourcesStock *game.ResourcesStock
+	game *game.Game
 }
 
 type UpgradeRequest struct {
 	Resource string `json:"resource" binding:"required"`
 }
 
-func NewGameController(resourcesStock *game.ResourcesStock) *GameController {
+func NewGameController(resourcesStock *game.Game) *GameController {
 	return &GameController{
 		resourcesStock,
 	}
@@ -38,7 +38,7 @@ func (gc *GameController) RegisterRouter(routerGroup *gin.RouterGroup) {
 
 func (gc *GameController) GetDashboard(g *gin.Context) {
 
-	g.JSON(http.StatusOK, gc.resourcesStock)
+	g.JSON(http.StatusOK, gc.game)
 }
 
 func (gc *GameController) UpgradeFactory(g *gin.Context) {
@@ -58,7 +58,7 @@ func (gc *GameController) UpgradeFactory(g *gin.Context) {
 		return
 	}
 
-	err = gc.resourcesStock.Upgrade(resource)
+	err = gc.game.UpgradeFactory(resource)
 	if err != nil {
 		g.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
