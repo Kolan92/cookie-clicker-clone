@@ -8,7 +8,7 @@ import (
 )
 
 type Game struct {
-	Resources *ResourcesStock
+	Resources *Resources
 
 	ironLock    sync.RWMutex
 	IronFactory *Factory
@@ -20,7 +20,7 @@ type Game struct {
 	GoldFactory *Factory
 }
 
-type ResourcesStock struct {
+type Resources struct {
 	Iron   int
 	Copper int
 	Gold   int
@@ -28,7 +28,7 @@ type ResourcesStock struct {
 
 func NewGame() *Game {
 	game := &Game{
-		Resources:     &ResourcesStock{},
+		Resources:     &Resources{},
 		IronFactory:   NewFactory(Iron, time.Second),
 		CopperFactory: NewFactory(Copper, time.Second),
 		GoldFactory:   NewFactory(Gold, time.Minute),
