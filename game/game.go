@@ -1,8 +1,11 @@
 package game
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
+	"os"
 	"sync"
 	"time"
 )
@@ -159,4 +162,16 @@ func (g *Game) CanUpgrade(resource Resource) error {
 		return errors.New("Unknown resource")
 	}
 	return nil
+}
+
+func (g *Game) SaveState() {
+	fmt.Println("Saving state")
+	const path = "game_state.json"
+	err := os.Remove(path)
+
+	bytes, _ := json.Marshal(g)
+	err = os.WriteFile(path, bytes, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
